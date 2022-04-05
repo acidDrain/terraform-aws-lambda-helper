@@ -19,3 +19,5 @@ terraform.tfstate.*
 **/terraform.tfstate.*
 build
 
+tfplan.json
+**/tfplan.json
