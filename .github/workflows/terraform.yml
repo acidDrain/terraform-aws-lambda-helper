@@ -6,6 +6,13 @@ on:
       - main
   pull_request:
 
+env:
+  AWS_REGION: "us-west-2"
+
+permissions:
+  id-token: write
+  contents: read    # This is required for actions/checkout@v2
+
 jobs:
   terraform:
     name: "Terraform"
@@ -14,6 +21,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: arn:aws:iam::689472803903:role/GitHubActions-Terraform-AWS-Lambda-Helper
+          role-session-name: githubactions
+          aws-region: ${{ env.AWS_REGION }}
+
       - name: Terraform Format
         id: fmt
         run: terraform fmt -check
@@ -21,7 +35,7 @@ jobs:
       - name: Terraform Init
         id: init
         run: terraform init
-      
+
       - name: Terraform Validate
         id: validate
         run: terraform validate -no-color
