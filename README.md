@@ -1,8 +1,9 @@
+[![Main Status](https://github.com/acidDrain/terraform-aws-lambda-helper/actions/workflows/terraform.yml/badge.svg?branch=main&event=push)](https://github.com/acidDrain/terraform-aws-lambda-helper/actions/workflows/terraform.yml) [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+
 # terraform-aws-lambda-helper
 
 An example project that uses `terraform` and TypeScript to deploy a Lambda 
 function to AWS. The Lambda runs on a schedule/cron via Event Bridge.
-
 
 - [Getting Started](#getting-started)
   - [Transpiling the TypeScript Source](#transpiling-the-typescript-source)
