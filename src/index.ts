@@ -1,4 +1,5 @@
-import * as LambdaResponseBuilder from "./response.js";
+import { Context, EventBridgeEvent, ScheduledEvent } from "aws-lambda";
+import * as LambdaResponseBuilder from "./response";
 
 interface IBaseENV {
   region: string;
@@ -13,11 +14,8 @@ const getValuesFromEnv = (env: NodeJS.ProcessEnv): IBaseENV => ({
 const returnPayload = { messages: {}, content: [""], status: 200 };
 
 const handler = async (
-  event: AWSLambda.EventBridgeEvent<
-    "Scheduled Event to Trigger Lambda",
-    Record<string, never>
-  >,
-  context: AWSLambda.Context
+  event: EventBridgeEvent<string, any>,
+  context: AWSLambda.Context,
 ): Promise<LambdaResponseBuilder.ILambdaResponse> => {
 
   try {
