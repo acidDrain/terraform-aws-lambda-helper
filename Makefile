@@ -1,7 +1,7 @@
 SHELL = /bin/sh
 # Makefile for transpiling node.js AWS Lambda function with TypeScript, testing 
 # with `jest`, and deploying with `terraform`
-.PHONY: all clean type-check destroy-all deploy output watch-test test
+.PHONY: all clean type-check destroy-all deploy output watch-test test tf-lint
 
 # Install `babel-cli` in a project to get the transpiler.
 tsc := node_modules/.bin/tsc
@@ -11,7 +11,7 @@ srctree := $(realpath $(dir $(this-makefile)))
 
 # This target also depends on the `node_modules/` directory, so that `make`
 # automatically runs `npm install` if `package.json` has changed.
-all: type-check plan-json build coverage node_modules build/node_modules test
+all: type-check plan-json build coverage node_modules build/node_modules test tf-lint tf-fmt
 
 # This rule tells `make` how to transpile a source file using `tsc`.
 # Transpiled files will be written to `build/`
@@ -51,7 +51,14 @@ watch-types: node_modules tsconfig.json
 .terraform:
 	terraform init
 
-tfplan.bin: build/node_modules .terraform
+# Format the terraform code
+tf-fmt: .terraform
+	terraform fmt -check
+
+tf-lint: .terraform
+	terraform validate
+
+tfplan.bin: build/node_modules .terraform tf-fmt tf-lint
 	terraform plan -out tfplan.bin
 
 # Create the terraform plan and save it to a file in order to apply after 
@@ -109,6 +116,8 @@ help:
 	@echo  '* coverage        - Run tests and write a report of test coverage'
 	@echo  ''
 	@echo  'terraform targets:'
+	@echo  '* tf-fmt          - Format terraform code using terraform built-in tool'
+	@echo  '* tf-lint         - Check the terraform code for errors'
 	@echo  '* plan            - Generate a terraform plan'
 	@echo  '  plan-json       - Create a copy of the terraform plan in JSON format'
 	@echo  '  deploy          - Deploy the environment'
