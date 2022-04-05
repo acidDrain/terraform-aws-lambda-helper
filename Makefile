@@ -84,3 +84,7 @@ destroy: destroy.tfplan.bin
 destroy-all: destroy.tfplan.bin
 	terraform apply destroy.tfplan.bin
 
+
+coverage: node_modules
+	npx jest --coverage
+
