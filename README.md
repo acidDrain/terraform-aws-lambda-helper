@@ -11,6 +11,7 @@ function to AWS. The Lambda runs on a schedule/cron via Event Bridge.
     - [Creating a `JSON` Version of the `terraform` Plan](#creating-a-json-version-of-the-terraform-plan)
     - [Deploying the Lambda](#deploying-the-lambda)
     - [Destroying and Removing All Resources from AWS](#destroying-and-removing-all-resources-from-aws)
+- [Getting Help](#getting-help)
 
 ## Getting Started
 
@@ -293,4 +294,8 @@ aws_s3_bucket.lambda_bucket: Destruction complete after 0s
 Apply complete! Resources: 0 added, 0 changed, 13 destroyed.
 
 ```
+
+## Getting Help
+
+You can run the `make help` command to get help information / output.
 
