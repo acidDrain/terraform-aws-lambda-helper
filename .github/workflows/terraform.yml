@@ -52,7 +52,6 @@ jobs:
         if: github.event_name == 'pull_request'
         run: terraform plan -var='environment="dev"' -var='lambda_name="cron-lambda"' -var='handler_name="handler"' -var='region="us-west-2"' -var='cron-minutes="25"' -var='cron-hours="06"' -no-color
         continue-on-error: true
-        uses: aws-actions/configure-aws-credentials@v1
         with:
           role-to-assume: arn:aws:iam::689472803903:role/GitHubActions-Terraform-AWS-Lambda-Helper
           role-session-name: githubactions
