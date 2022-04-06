@@ -40,6 +40,13 @@ jobs:
         id: validate
         run: terraform validate -no-color
 
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: arn:aws:iam::689472803903:role/GitHubActions-Terraform-AWS-Lambda-Helper
+          role-session-name: githubactions
+          aws-region: ${{ env.AWS_REGION }}
+
       - name: Terraform Plan
         id: plan
         if: github.event_name == 'pull_request'
