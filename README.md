@@ -293,7 +293,6 @@ aws_iam_role.lambda_exec: Destruction complete after 1s
 aws_s3_bucket.lambda_bucket: Destruction complete after 0s
 
 Apply complete! Resources: 0 added, 0 changed, 13 destroyed.
-
 ```
 
 ## Getting Help

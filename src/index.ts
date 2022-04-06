@@ -25,16 +25,16 @@ const handler = async (
     region,
   } = getValuesFromEnv(process.env);
 
-    console.log(`Lambda Name: ${LambdaName}, Lambda Region: ${region}`);
-    console.log(`event: ${JSON.stringify(event)}`);
-    console.log(`context: ${JSON.stringify(context)}`);
-    console.log(JSON.stringify({ message: "OK" }));
+    // console.log(`Lambda Name: ${LambdaName}, Lambda Region: ${region}`);
+    // console.log(`event: ${JSON.stringify(event)}`);
+    // console.log(`context: ${JSON.stringify(context)}`);
+    // console.log(JSON.stringify({ message: "OK" }));
 
     return LambdaResponseBuilder.ReturnSuccess(returnPayload);
 
   } catch (e) {
 
-    console.log(JSON.stringify({ body: JSON.stringify(e) }));
+    // console.log(JSON.stringify({ body: JSON.stringify(e) }));
 
     return LambdaResponseBuilder.ReturnFailure(e.message);
 
