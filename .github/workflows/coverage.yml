@@ -16,7 +16,6 @@ jobs:
 
       - name: Code Coverage
         id: coverage
-        if: github.event_name == 'pull_request'
         run: make coverage
         continue-on-error: true
 
