@@ -40,28 +40,18 @@ jobs:
         id: validate
         run: terraform validate -no-color
 
-      - name: configure aws credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          role-to-assume: arn:aws:iam::689472803903:role/GitHubActions-Terraform-AWS-Lambda-Helper
-          role-session-name: githubactions
-          aws-region: ${{ env.AWS_REGION }}
-
       - name: Terraform Plan
         id: plan
         if: github.event_name == 'pull_request'
-        run: terraform plan -var='environment="dev"' -var='lambda_name="cron-lambda"' -var='handler_name="handler"' -var='region="us-west-2"' -var='cron-minutes="25"' -var='cron-hours="06"' -no-color
+        run: terraform plan -var='environment=dev' -var='lambda_name=cron-lambda' -var='handler_name=handler' -var='region=us-west-2' -var='cron-minutes=25' -var='cron-hours=06' -no-color
         continue-on-error: true
-        with:
-          role-to-assume: arn:aws:iam::689472803903:role/GitHubActions-Terraform-AWS-Lambda-Helper
-          role-session-name: githubactions
-          aws-region: ${{ env.AWS_REGION }}
 
       - uses: actions/github-script@0.9.0
         if: github.event_name == 'pull_request'
         env:
           PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
             #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
